@@ -30,14 +30,29 @@ function crudDetalles($id){
 
 function crudDetallesSiguiente($id){
     $db = AccesoDatos::getModelo();
-    $cli = $db->getCliente($id+1);
+    $cli = $db->getCliente($id);
+
+    //Obtengo el tipo de ordenacion y el dato actual para mostrar el siguiente
+    $ordenacion = $_SESSION['ordenacion'];
+    $dato_actual = $cli->$ordenacion;
+
+    //Si el nuevoId es 0 es que estamos en el último dato y no hará falta hacer consultar por un cliente nuevo
+    $nuevoId = $db->getClienteSiguiente($ordenacion,$dato_actual);
+    $cli = $nuevoId != 0 ?  $db->getCliente($nuevoId) : $cli;
     include_once "app/views/detalles.php";
 }
 
 function crudDetallesAnterior($id){
     $db = AccesoDatos::getModelo();
-    $id = ($id <= 1) ? $id : $id-1;
     $cli = $db->getCliente($id);
+
+    //Obtengo el tipo de ordenacion y el dato actual para mostrar el anterior
+    $ordenacion = $_SESSION['ordenacion'];
+    $dato_actual = $cli->$ordenacion;
+
+    //Si el nuevoId es 0 es que estamos en el primer dato y no hará falta hacer consultar por un cliente nuevo
+    $nuevoId = $db->getClienteAnterior($ordenacion,$dato_actual);
+    $cli = $nuevoId != 0 ?  $db->getCliente($nuevoId) : $cli;
     include_once "app/views/detalles.php";
 }
 

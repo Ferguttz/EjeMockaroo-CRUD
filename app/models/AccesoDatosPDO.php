@@ -90,39 +90,38 @@ class AccesoDatos {
     }
 
      
-    public function getClienteSiguiente($ordenacion){
-
-        $cli = false;
+    public function getClienteSiguiente($ordenacion,$dato){
+        $id = 0;
         
-        $stmt_cli   = $this->dbh->prepare("select * from Clientes where id >? limit 1");
-        // Enlazo $id con el primer ? 
-        $stmt_cli->bindParam(1,$id);
-        $stmt_cli->setFetchMode(PDO::FETCH_CLASS, 'Cliente');
-        if ( $stmt_cli->execute() ){
-            if ( $obj = $stmt_cli->fetch()){
-               $cli= $obj;
-           }
-       }
-        return $cli;
+        //Preparo la sentencia en bsae a la ordenacion impuesta y el dato ordenado actual
+        $stmt_siguiente   = $this->dbh->prepare("select id from Clientes where $ordenacion > ? ORDER BY $ordenacion limit 1");
+        $stmt_siguiente->bindParam(1,$dato);
+        $stmt_siguiente->execute();
 
+        //Si la no han sido afectadas ninguna fila es que estamos en la última dato de la base
+        if ( $stmt_siguiente->rowCount() == 1){
+            $id = $stmt_siguiente->fetch()[0];
+        }
+
+
+        return $id;
     }
 
-    public function getClienteAnterior($id){
-
-        $cli = false;
+    public function getClienteAnterior($ordenacion,$dato){
+        $id = 0;
         
-        $stmt_cli   = $this->dbh->prepare("select * from Clientes where id <? order by id DESC limit 1");
-       // Enlazo $id con el primer ? 
-        $stmt_cli->bindParam(1,$id);
-        $stmt_cli->setFetchMode(PDO::FETCH_CLASS, 'Cliente');
-        if ( $stmt_cli->execute() ){
-           if ( $obj = $stmt_cli->fetch()){
-              $cli= $obj;
-          }
-        }
-       
-    return $cli;
+        //Preparo la sentencia en bsae a la ordenacion impuesta y el dato ordenado actual
+        $stmt_siguiente   = $this->dbh->prepare("select id from Clientes where $ordenacion < ? ORDER BY $ordenacion limit 1");
+        $stmt_siguiente->bindParam(1,$dato);
+        $stmt_siguiente->execute();
 
+        //Si la no han sido afectadas ninguna fila es que estamos en la última dato de la base
+        if ( $stmt_siguiente->rowCount() == 1){
+            $id = $stmt_siguiente->fetch()[0];
+        }
+
+
+        return $id;
     }
 
 

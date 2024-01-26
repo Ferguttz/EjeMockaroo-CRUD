@@ -3,12 +3,13 @@
 <button type="submit" name="orden" value="Nuevo"> Cliente Nuevo </button><br>
 </form>
 <br>
-<?php $titulos = ['id','first_name','email','gender','ip_address','telefono']; ?>
+<?php $titulos = ['id','first_name','email','gender','ip_address']; ?>
 <table>
 <tr>
     <?php foreach ($titulos as $valor): ?>
         <th><a href="<?=$_SERVER['PHP_SELF'].'?ordenacion='.$valor?>"><?= $valor ?></a></th>
     <?php endforeach ?>
+    <th><a href="<?=$_SERVER['PHP_SELF'].'?ordenacion=telefono'?>">teléfono</a></th>
 </tr>
 <?php foreach ($tvalores as $valor): ?>
 <tr>
