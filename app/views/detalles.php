@@ -4,8 +4,9 @@
 <table>
  <tr><td>id:</td> 
  <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly > </td>
- <td rowspan="7">
-<img src=""></img></td> 
+    <td rowspan="7">
+        <img src=<?= imagenPerfil($cli->id) ?>></img>
+    </td> 
 </tr>
  <tr><td>first_name:</td> 
  <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" readonly > </td></tr>

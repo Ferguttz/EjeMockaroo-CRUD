@@ -1,12 +1,21 @@
 
 <hr>
-<form   method="POST" style="display: inline;">
+<form  enctype="multipart/form-data" method="POST" style="display: inline;">
 <table>
  <tr><td>id:</td> 
- <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly  ></td></tr>
+ <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly  ></td>
+        <td>
+        <input type="hidden" name="MAX_FILE_SIZE" value="500000" /> 
+        <input name="imagen" type="file" accept="image/png, image/jpeg" value="tiktok.png">
+        </td>
+</tr>
  </tr>
  <tr><td>first_name:</td> 
- <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" autofocus  ></td></tr>
+ <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" autofocus  ></td>
+ <td rowspan="6">
+        <img src=<?= imagenPerfil($cli->id) ?>></img>
+    </td> 
+</tr>
  </tr>
  <tr><td>last_name:</td> 
  <td><input type="text" name="last_name" value="<?=$cli->last_name ?>"  ></td></tr>

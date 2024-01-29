@@ -55,15 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
         
      }
     }
-
-
-     if ( isset($_GET['nav-detalles']) && isset($_GET['id']) ) {
-        switch ( $_GET['nav-detalles']) {
-           case "Siguiente": crudDetallesSiguiente($_GET['id']); break;
-           case "Anterior" : crudDetallesAnterior($_GET['id']); break;
-           
-       }
-    }
     
     if ( isset($_GET['nav-modificar']) && isset($_GET['id']) ) {
         switch ( $_GET['nav-modificar']) {

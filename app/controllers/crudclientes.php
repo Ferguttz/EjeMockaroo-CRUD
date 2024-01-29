@@ -38,7 +38,7 @@ function crudDetallesSiguiente($id){
 
     //Si el nuevoId es 0 es que estamos en el último dato y no hará falta hacer consultar por un cliente nuevo
     $nuevoId = $db->getClienteSiguiente($ordenacion,$dato_actual);
-    $cli = $nuevoId != 0 ?  $db->getCliente($nuevoId) : $cli;
+    $cli = ($nuevoId != 0) ?  $db->getCliente($nuevoId) : $cli;
     include_once "app/views/detalles.php";
 }
 
@@ -52,17 +52,39 @@ function crudDetallesAnterior($id){
 
     //Si el nuevoId es 0 es que estamos en el primer dato y no hará falta hacer consultar por un cliente nuevo
     $nuevoId = $db->getClienteAnterior($ordenacion,$dato_actual);
-    $cli = $nuevoId != 0 ?  $db->getCliente($nuevoId) : $cli;
+    $cli = ($nuevoId != 0) ?  $db->getCliente($nuevoId) : $cli;
     include_once "app/views/detalles.php";
 }
 
-function crudModificarSiguiente($id){
-    crudModificar($id+1);
+function crudModificarSiguiente($id)
+{
+    $db = AccesoDatos::getModelo();
+    $cli = $db->getCliente($id);
+
+    //Obtengo el tipo de ordenacion y el dato actual para mostrar el anterior
+    $ordenacion = $_SESSION['ordenacion'];
+    $dato_actual = $cli->$ordenacion;
+
+    //Si el nuevoId es 0 es que estamos en el primer dato y no hará falta hacer consultar por un cliente nuevo
+    $nuevoId = $db->getClienteSiguiente($ordenacion,$dato_actual);
+    $cli = ($nuevoId != 0) ?  $db->getCliente($nuevoId) : $cli;
+    $orden = "Modificar";
+    include_once "app/views/formularioModificar.php";
 }
 
 function crudModificarAnterior($id){
-    $id = ($id <= 1) ? $id : $id-1;
-    crudModificar($id);
+    $db = AccesoDatos::getModelo();
+    $cli = $db->getCliente($id);
+
+    //Obtengo el tipo de ordenacion y el dato actual para mostrar el anterior
+    $ordenacion = $_SESSION['ordenacion'];
+    $dato_actual = $cli->$ordenacion;
+    
+    //Si el nuevoId es 0 es que estamos en el primer dato y no hará falta hacer consultar por un cliente nuevo
+    $nuevoId = $db->getClienteAnterior($ordenacion,$dato_actual);
+    $cli = ($nuevoId != 0) ?  $db->getCliente($nuevoId) : $cli;
+    $orden = "Modificar";
+    include_once "app/views/formularioModificar.php";
 }
 
 function crudModificar($id){
@@ -74,7 +96,11 @@ function crudModificar($id){
 
 function crudPostAlta(){
     limpiarArrayEntrada($_POST); //Evito la posible inyección de código
-    // !!!!!! No se controlan que los datos sean correctos 
+    // !!!!!! No se controlan que los datos sean correctos
+
+    if (!chequeoDatos($_POST,$_FILES)) {
+        die(crudPostAltaRecuperacion($_POST));
+    } 
     $cli = new Cliente();
     $cli->id            =$_POST['id'];
     $cli->first_name    =$_POST['first_name'];
@@ -93,6 +119,11 @@ function crudPostAlta(){
 
 function crudPostModificar(){
     limpiarArrayEntrada($_POST); //Evito la posible inyección de código
+
+    if (!chequeoDatos($_POST,$_FILES)) {
+        die(crudPostModificarRecuperacion($_POST));
+    } 
+
     $cli = new Cliente();
 
     $cli->id            =$_POST['id'];
@@ -109,4 +140,48 @@ function crudPostModificar(){
         $_SESSION['msg'] = " Error al modificar el usuario ";
     }
     
+}
+
+function crudPostAltaRecuperacion($datos) {
+    ob_start();
+    $cli = new Cliente();
+
+    $cli->id            =$datos['id'];
+    $cli->first_name    =$datos['first_name'];
+    $cli->last_name     =$datos['last_name'];
+    $cli->email         =$datos['email'];	
+    $cli->gender        =$datos['gender'];
+    $cli->ip_address    =$datos['ip_address'];
+    $cli->telefono      =$datos['telefono'];
+
+    $orden="Nuevo";
+    require_once "app/views/formulario.php";
+
+
+    $contenido = ob_get_clean();
+    $msg = $_SESSION['msg'];
+    include_once "app/views/principal.php";
+    exit();
+}
+
+function crudPostModificarRecuperacion($datos) {
+    ob_start();
+    $cli = new Cliente();
+
+    $cli->id            =$datos['id'];
+    $cli->first_name    =$datos['first_name'];
+    $cli->last_name     =$datos['last_name'];
+    $cli->email         =$datos['email'];	
+    $cli->gender        =$datos['gender'];
+    $cli->ip_address    =$datos['ip_address'];
+    $cli->telefono      =$datos['telefono'];
+
+    $orden="Modificar";
+    require_once "app/views/formularioModificar.php";
+
+
+    $contenido = ob_get_clean();
+    $msg = $_SESSION['msg'];
+    include_once "app/views/principal.php";
+    exit();
 }

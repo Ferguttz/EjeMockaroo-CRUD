@@ -111,7 +111,7 @@ class AccesoDatos {
         $id = 0;
         
         //Preparo la sentencia en bsae a la ordenacion impuesta y el dato ordenado actual
-        $stmt_siguiente   = $this->dbh->prepare("select id from Clientes where $ordenacion < ? ORDER BY $ordenacion limit 1");
+        $stmt_siguiente   = $this->dbh->prepare("select id from Clientes where $ordenacion < ? ORDER BY $ordenacion DESC limit 1");
         $stmt_siguiente->bindParam(1,$dato);
         $stmt_siguiente->execute();
 
@@ -161,6 +161,25 @@ class AccesoDatos {
         $stmt_crearcli->bindValue(6,$cli->telefono);    
         $stmt_crearcli->execute();
         $resu = ($stmt_crearcli->rowCount () == 1);
+        return $resu;
+    }
+
+    public function correoRepetido($correo,$id) : bool {
+        $stmt_correo = $this->dbh->prepare("SELECT email,id FROM clientes WHERE email=:email");
+        $stmt_correo->bindValue(':email',$correo);
+
+        $stmt_correo->execute();
+
+        //Si las filas resultantes son mayores que 0 hay repetido
+        $resu = ($stmt_correo->rowCount() >= 1) ? true : false;
+
+        if($resu) $id_correo = $stmt_correo->fetch()[1];
+
+        //Para tratar el caso de PostModificar
+        if ($stmt_correo->rowCount() == 1 && $id == $id_correo) {
+            $resu = false;
+        }
+
         return $resu;
     }
 
