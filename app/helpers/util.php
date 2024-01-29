@@ -95,6 +95,8 @@ function moverImagen($id,$imagen) : string {
     $temporal = $imagen['imagen']['tmp_name'];
     $msg = '';
 
+
+
     if ( is_dir(DIRIMAGEN) && is_writable (DIRIMAGEN)) {
         if (move_uploaded_file($temporal,  DIRIMAGEN . $nombre) == false) {
             $msg .= 'La imagen no se ha guardado correctamente <br />';
