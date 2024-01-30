@@ -173,9 +173,8 @@ class AccesoDatos {
         //Si las filas resultantes son mayores que 0 hay repetido
         $resu = ($stmt_correo->rowCount() >= 1) ? true : false;
 
-        if($resu) $id_correo = $stmt_correo->fetch()[1];
-
         //Para tratar el caso de PostModificar
+        if($resu) $id_correo = $stmt_correo->fetch()[1];
         if ($stmt_correo->rowCount() == 1 && $id == $id_correo) {
             $resu = false;
         }
@@ -183,6 +182,14 @@ class AccesoDatos {
         return $resu;
     }
 
+    public function siguienteId() : int {
+        $stmt = $this->dbh->query("SELECT `AUTO_INCREMENT` 
+                        FROM INFORMATION_SCHEMA.TABLES 
+                        WHERE TABLE_SCHEMA = 'testmockaroo' 
+                        AND TABLE_NAME = 'clientes'");
+        $resu = $stmt->fetch();
+        return $resu[0];
+    }
    
     //DELETE 
     public function borrarCliente(int $id):bool {

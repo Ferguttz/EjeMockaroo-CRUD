@@ -6,7 +6,7 @@
  <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly  ></td>
         <td>
         <input type="hidden" name="MAX_FILE_SIZE" value="500000" /> 
-        <input name="imagen" type="file" accept="image/png, image/jpeg" value="tiktok.png">
+        <input name="imagen" type="file" accept="image/png, image/jpeg">
         </td>
 </tr>
  </tr>

@@ -23,6 +23,11 @@ function limpiarArrayEntrada(array &$entrada){
 function chequeoDatos($datos,$imagen) : bool {
 
     //Comprobar Imagen subida
+    if ($datos['id'] == "") {
+        $db = AccesoDatos::getModelo();
+        $id = $db->siguienteId();
+    }
+
     $error = $imagen['imagen']['error'];
     if ($error != 4) {
 
@@ -37,7 +42,7 @@ function chequeoDatos($datos,$imagen) : bool {
             return false;
         }
 
-        $comprobar = moverImagen($datos['id'],$imagen);
+        $comprobar = moverImagen($id,$imagen);
         if ($comprobar != "") {
             $_SESSION['msg'] = $comprobar;
             return false;
