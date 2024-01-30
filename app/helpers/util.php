@@ -26,6 +26,8 @@ function chequeoDatos($datos,$imagen) : bool {
     if ($datos['id'] == "") {
         $db = AccesoDatos::getModelo();
         $id = $db->siguienteId();
+    } else {
+        $id = $datos['id'];
     }
 
     $error = $imagen['imagen']['error'];
@@ -116,9 +118,9 @@ function moverImagen($id,$imagen) : string {
 function generarNombreImagen($id,$nombre) : string {
     $plantilla = "00000000";
     $foto = substr($plantilla,0,-strlen($id)).$id;
-    $extencion = pathinfo($nombre,PATHINFO_EXTENSION);
+    //$extencion = pathinfo($nombre,PATHINFO_EXTENSION);
 
-    $resu = $foto. "." . $extencion ;
+    $resu = $foto. "." . "jpg" ;
 
     return $resu;
 }
