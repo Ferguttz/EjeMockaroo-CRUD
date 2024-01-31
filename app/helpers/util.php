@@ -97,6 +97,20 @@ function imagenPerfil($id) : string {
     return $resu;
 }
 
+//Seleccionar la bandera según IP
+function banderaIp($ip) : string {
+    $pais_JSON = file_get_contents("http://ip-api.com/json/$ip?fields=status,countryCode,query");
+    $pais = json_decode($pais_JSON,true);
+    if($pais['status']=="success") {
+        $code = strtolower($pais['countryCode']);
+        return "https://flagcdn.com/28x21/$code.png";
+    }
+
+    //Retornar la bandera de las naciones unidas
+    return "https://flagcdn.com/20x15/un.png";
+}
+
+//Funcion Para mover una Imagen
 function moverImagen($id,$imagen) : string {
     $nombre = generarNombreImagen($id,$imagen['imagen']['name']);
     $temporal = $imagen['imagen']['tmp_name'];

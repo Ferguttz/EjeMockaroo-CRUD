@@ -21,7 +21,9 @@
  <td><input type="text" name="gender" value="<?=$cli->gender ?>" readonly ></td></tr>
  </tr>
  <tr><td>ip_address:</td> 
- <td><input type="text" name="ip_address" value="<?=$cli->ip_address ?>" readonly ></td></tr>
+ <td><input type="text" name="ip_address" value="<?=$cli->ip_address ?>" readonly >
+ <img src=<?= banderaIp($cli->ip_address) ?> style="width: 20px;height: 20px;border-radius: unset;margin-bottom: -5px;"></td>
+</tr>
  </tr>
  <tr><td>telefono:</td> 
  <td><input type="tel" name="telefono" value="<?=$cli->telefono ?>" readonly ></td></tr>
