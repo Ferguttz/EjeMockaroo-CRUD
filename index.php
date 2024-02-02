@@ -34,7 +34,7 @@ $_SESSION['msg']=" ";
 
 ob_start(); // La salida se guarda en el bufer
 if ($_SERVER['REQUEST_METHOD'] == "GET" ){
-    
+
     // Proceso las ordenes de navegación
     if ( isset($_GET['nav'])) {
         switch ( $_GET['nav']) {
@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
      switch ( $_GET['nav-detalles']) {
         case "Siguiente": crudDetallesSiguiente($_GET['id']); break;
         case "Anterior" : crudDetallesAnterior($_GET['id']); break;
+        case "Imprimir" : imprimirUsuario($_GET['id']); break;
         
      }
     }

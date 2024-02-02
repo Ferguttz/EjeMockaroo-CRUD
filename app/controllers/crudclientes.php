@@ -185,3 +185,19 @@ function crudPostModificarRecuperacion($datos) {
     include_once "app/views/principal.php";
     exit();
 }
+
+function imprimirUsuario($id) {
+    ob_start();
+    $db = AccesoDatos::getModelo();
+    $cli = $db->getCliente($id);
+    include_once "app/views/detallesImprimir.php";
+    $contenido = ob_get_clean();
+
+
+    require_once "vendor/autoload.php";
+
+    $mpdf = new \Mpdf\Mpdf();
+    $mpdf->WriteHTML($contenido);
+    $mpdf->Output();
+}
+

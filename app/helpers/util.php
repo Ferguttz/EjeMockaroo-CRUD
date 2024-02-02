@@ -2,6 +2,7 @@
 define('MAX_UPLOAD', 500000); //Maximo de tamaño de archivos entre todos 500Kb
 define('DIRIMAGEN',"app/uploads/"); //Ruta Directorio de imgusers
 
+
 /*
  *  Funciones para limpiar la entrada de posibles inyecciones
  */
@@ -86,7 +87,7 @@ function imagenPerfil($id) : string {
 
     $plantilla = "00000000";
     $foto = substr($plantilla,0,-strlen($id)).$id;
-    $ruta = DIRIMAGEN."$foto.jpg";
+    $ruta = file_exists(DIRIMAGEN."$foto.jpg") ? DIRIMAGEN."$foto.jpg" : DIRIMAGEN."$foto.png";
 
     if (file_exists($ruta)) {
         $resu = $ruta;
@@ -103,11 +104,12 @@ function banderaIp($ip) : string {
     $pais = json_decode($pais_JSON,true);
     if($pais['status']=="success") {
         $code = strtolower($pais['countryCode']);
-        return "https://flagcdn.com/28x21/$code.png";
+        //return "https://flagcdn.com/36x27/$code.png";
+        return "https://flagcdn.com/$code.svg";
     }
 
     //Retornar la bandera de las naciones unidas
-    return "https://flagcdn.com/20x15/un.png";
+    return "https://flagcdn.com/un.svg";
 }
 
 //Funcion Para mover una Imagen
@@ -129,15 +131,18 @@ function moverImagen($id,$imagen) : string {
     return $msg;
 }
 
+//Funcion Axiliar para generar nombre de la imagen para alta ed nuevo usuario
 function generarNombreImagen($id,$nombre) : string {
     $plantilla = "00000000";
     $foto = substr($plantilla,0,-strlen($id)).$id;
-    //$extencion = pathinfo($nombre,PATHINFO_EXTENSION);
+    $extencion = pathinfo($nombre,PATHINFO_EXTENSION);
 
-    $resu = $foto. "." . "jpg" ;
+    $resu = $foto. "." . $extencion ;
 
     return $resu;
 }
+
+
 
 /**
  * Funciones para Tratar la imagen de perfil

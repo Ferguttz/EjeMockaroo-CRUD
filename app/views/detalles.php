@@ -22,7 +22,7 @@
  </tr>
  <tr><td>ip_address:</td> 
  <td><input type="text" name="ip_address" value="<?=$cli->ip_address ?>" readonly >
- <img src=<?= banderaIp($cli->ip_address) ?> style="width: 20px;height: 20px;border-radius: unset;margin-bottom: -5px;"></td>
+ <img src=<?= banderaIp($cli->ip_address) ?> style="width: 24px;height: 21px;border-radius: unset;margin-bottom: -5px;"></td>
 </tr>
  </tr>
  <tr><td>telefono:</td> 
@@ -34,6 +34,7 @@
 <input type="hidden"  name="id" value="<?=$cli->id ?>">
 <button type="submit" name="nav-detalles" value="Anterior"> Anterior << </button>
 <button type="submit" name="nav-detalles" value="Siguiente"> Siguiente >> </button>
+<button type="submit" name="nav-detalles" value="Imprimir">Imprimir</button>
 </form> 
 
 
