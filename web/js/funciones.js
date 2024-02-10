@@ -84,17 +84,3 @@ function gestionandoevento(evento) {
 
 
 document.addEventListener('readystatechange',gestionandoevento,false);
-
-
-
-/*
-    navigation.addEventListener("navigate", e => {
-      console.log(`navigate ->`,e.destination.url)
-      console.log('page changed');
-    });
-
-    window.addEventListener('popstate', function (event) {
-      // Log the state data to the console
-      console.log(event.state);
-    });
-*/
