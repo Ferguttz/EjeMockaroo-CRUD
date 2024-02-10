@@ -6,6 +6,10 @@
  <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly > </td>
     <td rowspan="7">
         <img src=<?= imagenPerfil($cli->id) ?>></img>
+    </td>
+
+    <td rowspan="7">
+    <div id="map" style="height: 200px; width: 370px;"></div>
     </td> 
 </tr>
  <tr><td>first_name:</td> 
@@ -29,12 +33,9 @@
  <td><input type="tel" name="telefono" value="<?=$cli->telefono ?>" readonly ></td></tr>
  </tr>
  </table>
-
 <form>
 <input type="hidden"  name="id" value="<?=$cli->id ?>">
 <button type="submit" name="nav-detalles" value="Anterior"> Anterior << </button>
 <button type="submit" name="nav-detalles" value="Siguiente"> Siguiente >> </button>
 <button type="submit" name="nav-detalles" value="Imprimir">Imprimir</button>
-</form> 
-
-
+</form>

@@ -201,3 +201,13 @@ function imprimirUsuario($id) {
     $mpdf->Output();
 }
 
+
+function accesoControl($login,$password) : bool {
+    $db = AccesoDatos::getModelo();
+    return $db->verificarAcceso($login,$password);
+}
+
+function rolUsuario($login) : int {
+    $db = AccesoDatos::getModelo();
+    return $db->getRol($login);
+}

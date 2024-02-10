@@ -14,6 +14,10 @@
  <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" autofocus  ></td>
  <td rowspan="6">
         <img src=<?= imagenPerfil($cli->id) ?>></img>
+    </td>
+    
+    <td rowspan="7">
+    <div id="map"></div>
     </td> 
 </tr>
  </tr>

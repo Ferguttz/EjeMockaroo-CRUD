@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 define ('FPAG',10); // Número de filas por página
 
 
@@ -8,6 +9,36 @@ require_once 'app/config/configDB.php';
 require_once 'app/models/Cliente.php';
 require_once 'app/models/AccesoDatosPDO.php';
 require_once 'app/controllers/crudclientes.php';
+
+
+//------------- CONTROL DE ACCESO -------
+$contenido = "";
+$msg = "";
+
+if (!isset($_SESSION['intentos'])) {
+    $_SESSION['intentos'] = 0;
+}
+
+
+if (!isset($_SESSION["acceso"]) && $_SESSION['intentos'] < 3) {
+    if (!isset($_GET["password"])) {
+        include "app/views/login.php";
+        exit();
+    } else if (!accesoControl($_GET['login'],$_GET['password'])) {
+        $msg = "Login o contraseña incorrectos";
+        $_SESSION['intentos']++;
+        include "app/views/login.php";
+        exit();
+    } else {
+        $_SESSION["acceso"] = "si";
+        $_SESSION['rol'] = rolUsuario($_GET['login']);
+        header("Refresh:0");
+    }
+} elseif ($_SESSION['intentos'] >= 3) {
+    include "app/views/bloqueo.php";
+    exit();
+}
+
 
 //---- PAGINACIÓN ----
 $midb = AccesoDatos::getModelo();
@@ -99,11 +130,13 @@ if ( ob_get_length() == 0){
     $posini = $_SESSION['posini'];
     $ordenacion = $_SESSION['ordenacion'];
     $tvalores = $db->getClientes($posini,FPAG,$ordenacion);
-    require_once "app/views/list.php";    
+    //Se muestra la lista dependiendo del rol del usuario
+    $_SESSION['rol'] == 1 ? require_once "app/views/list.php" : require_once "app/views/list_Limitado.php"; 
 }
 $contenido = ob_get_clean();
 $msg = $_SESSION['msg'];
 // Muestro la página principal con el contenido generado
+
 require_once "app/views/principal.php";
 
 

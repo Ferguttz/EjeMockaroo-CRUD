@@ -31,20 +31,23 @@ function chequeoDatos($datos,$imagen) : bool {
         $id = $datos['id'];
     }
 
+    //Comprobamos qué tipo de error nos puede dar
     $error = $imagen['imagen']['error'];
     if ($error != 4) {
-
+        //El error 0 es caso de éxito por parte de cliente. Si es distinto se avisa el error
         if($error != 0) {
             $_SESSION['msg'] = codErrorImagen($error);
             return false;
         }
 
+        //Comprobar por parte de servidor. Si hay texto en $comprobar es que hay error
         $comprobar = comprobarImagen($imagen);
         if ($error == 0 && $comprobar != "") {
             $_SESSION['msg'] = $comprobar;
             return false;
         }
 
+        //Si hay texto en $comprobar es que no se ha habido error en mover la imagen
         $comprobar = moverImagen($id,$imagen);
         if ($comprobar != "") {
             $_SESSION['msg'] = $comprobar;
@@ -55,7 +58,7 @@ function chequeoDatos($datos,$imagen) : bool {
 
     //Comprobar Teléfono
     if (!preg_match("/\d{3}\-\d{3}\-\d{4}$/", $datos['telefono'])) {
-        $_SESSION['msg'] = "Error numero dígitos en el teléfono teléfono";
+        $_SESSION['msg'] = "Error numero dígitos en el teléfono";
         return false;
     }
     

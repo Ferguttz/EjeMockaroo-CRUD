@@ -8,6 +8,9 @@
  */
 
 //SELECT * FROM clientes WHERE id > 5 ORDER BY id LIMIT 1;
+
+use Mpdf\Tag\B;
+
 class AccesoDatos {
     
     private static $modelo = null;
@@ -185,7 +188,7 @@ class AccesoDatos {
     public function siguienteId() : int {
         $stmt = $this->dbh->query("SELECT `AUTO_INCREMENT` 
                         FROM INFORMATION_SCHEMA.TABLES 
-                        WHERE TABLE_SCHEMA = 'testmockaroo' 
+                        WHERE TABLE_SCHEMA = 'testmockaroo2' 
                         AND TABLE_NAME = 'clientes'");
         $resu = $stmt->fetch();
         return $resu[0];
@@ -202,7 +205,30 @@ class AccesoDatos {
         $resu = ($stmt_boruser->rowCount () == 1);
         return $resu;
         
-    }   
+    }
+    
+    function verificarAcceso($login,$password) : bool {
+        $stmt = $this->dbh->prepare("SELECT login,password FROM user WHERE login=:login");
+        $stmt->bindValue(':login', $login);
+        $stmt->execute();
+
+        //Si no existe el login devuelve falso
+        if ($stmt->rowCount() != 1) {
+            return false;
+        }
+
+        //Se devulve según si la contraseña dada coincide con le hash de la base
+        return password_verify($password,$stmt->fetch()[1]);
+    }
+
+
+    function getRol($login) : int {
+        $stmt = $this->dbh->prepare("SELECT rol FROM user WHERE login=:login");
+        $stmt->bindValue(':login', $login);
+        $stmt->execute();
+
+        return $stmt->fetch()[0];
+    }
     
     
      // Evito que se pueda clonar el objeto. (SINGLETON)
