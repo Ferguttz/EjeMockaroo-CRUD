@@ -20,10 +20,53 @@ function limpiarArrayEntrada(array &$entrada){
     }
 }
 
+
 //Función par comprobar los datos envidos en Nuevo y Modificar
 function chequeoDatos($datos,$imagen) : bool {
 
-    //Comprobar Imagen subida
+    //En caso de ERROR dentro de la funcion se le asigna la variable $_SESSION['msg']
+    if (!chequeoImagen($datos,$imagen)) {
+        $_SESSION['autofocus'] = "";
+        return false;
+    }
+
+    //Comprobar Teléfono
+    if (!preg_match("/\d{3}\-\d{3}\-\d{4}$/", $datos['telefono'])) {
+        $_SESSION['msg'] = "Error numero dígitos en el teléfono";
+        $_SESSION['autofocus'] = "telefono";
+        return false;
+    }
+    
+    //Comprobar Direccion IP
+    if (!filter_var($datos['ip_address'], FILTER_VALIDATE_IP)) {
+        $_SESSION['msg'] = "Error en dirección IP";
+        $_SESSION['autofocus'] = "ip_address";
+        return false;
+    }
+
+    //Comprbamos formato del correo Electrónico
+    if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['msg'] = "Formato inválido de correo Electrónico";
+        $_SESSION['autofocus'] = "email";
+        return false;
+    }
+
+    //Comprobar que no se repite el correo electrónico
+    $db = AccesoDatos::getModelo();
+    if($db->correoRepetido($datos['email'],$datos['id'])) {
+        $_SESSION['msg'] = "Correo Electrónico Duplicado";
+        $_SESSION['autofocus'] = "email";
+        return false;
+    }
+
+    $_SESSION['autofocus'] = 'first_name';
+    return true;
+}
+
+function chequeoImagen($datos,$imagen) : bool {
+    //Comprobar si estamos en Modificar o Nuevo.
+    //Caso 1 (Nuevo): Comprobamos el siguiente Auto Icrement del Id
+    //Caso 2 (Modificar): Asiganamos a Id el que nos vino en el POST
     if ($datos['id'] == "") {
         $db = AccesoDatos::getModelo();
         $id = $db->siguienteId();
@@ -34,13 +77,13 @@ function chequeoDatos($datos,$imagen) : bool {
     //Comprobamos qué tipo de error nos puede dar
     $error = $imagen['imagen']['error'];
     if ($error != 4) {
-        //El error 0 es caso de éxito por parte de cliente. Si es distinto se avisa el error
+        //El error 0 es caso de éxito por parte de CLIENTE. Si es distinto se avisa el error
         if($error != 0) {
             $_SESSION['msg'] = codErrorImagen($error);
             return false;
         }
 
-        //Comprobar por parte de servidor. Si hay texto en $comprobar es que hay error
+        //Comprobar por parte de SERVIDOR. Si hay texto en $comprobar es que hay error
         $comprobar = comprobarImagen($imagen);
         if ($error == 0 && $comprobar != "") {
             $_SESSION['msg'] = $comprobar;
@@ -56,32 +99,8 @@ function chequeoDatos($datos,$imagen) : bool {
         
     }
 
-    //Comprobar Teléfono
-    if (!preg_match("/\d{3}\-\d{3}\-\d{4}$/", $datos['telefono'])) {
-        $_SESSION['msg'] = "Error numero dígitos en el teléfono";
-        return false;
-    }
-    
-    //Comprobar Direccion IP
-    if (!filter_var($datos['ip_address'], FILTER_VALIDATE_IP)) {
-        $_SESSION['msg'] = "Error en dirección IP";
-        return false;
-    }
-
-    //Comprbamos formato del correo Electrónico
-    if (!filter_var($datos['email'], FILTER_VALIDATE_EMAIL)) {
-        $_SESSION['msg'] = "Formato inválido de correo Electrónico";
-        return false;
-    }
-
-    //Comprobar que no se repite el correo electrónico
-    $db = AccesoDatos::getModelo();
-    if($db->correoRepetido($datos['email'],$datos['id'])) {
-        $_SESSION['msg'] = "Correo Electrónico Duplicado";
-        return false;
-    }
-
     return true;
+
 }
 
 //Función para asignar una foto de perfil
@@ -111,7 +130,7 @@ function banderaIp($ip) : string {
         return "https://flagcdn.com/$code.svg";
     }
 
-    //Retornar la bandera de las naciones unidas
+    //Retornar la bandera de las naciones unidas como bandera genérica
     return "https://flagcdn.com/un.svg";
 }
 
@@ -122,13 +141,13 @@ function moverImagen($id,$imagen) : string {
     $msg = '';
 
 
-
     if ( is_dir(DIRIMAGEN) && is_writable (DIRIMAGEN)) {
+        if(file_exists(DIRIMAGEN.$nombre)) unlink(DIRIMAGEN.$nombre);
         if (move_uploaded_file($temporal,  DIRIMAGEN . $nombre) == false) {
             $msg .= 'La imagen no se ha guardado correctamente <br />';
         }
     } else {
-        $msg .= 'ERROR: No es un directorio correcto o no se tiene permiso de escrituraaaa <br />';
+        $msg .= 'ERROR: No es un directorio correcto o no se tiene permiso de escritura <br />';
     }
 
     return $msg;
@@ -141,6 +160,10 @@ function generarNombreImagen($id,$nombre) : string {
     $extencion = pathinfo($nombre,PATHINFO_EXTENSION);
 
     $resu = $foto. "." . $extencion ;
+
+    //Compruebo si existe ya una foto en la carpeta de uploads
+    $fotoRepe = glob(DIRIMAGEN.$foto . ".*");
+    if(!empty($fotoRepe)) unlink($fotoRepe[0]);
 
     return $resu;
 }

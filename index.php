@@ -60,6 +60,10 @@ if ( !isset($_SESSION['ordenacion']) ){
     $_SESSION['ordenacion'] = 'id';
 }
 
+if ( !isset($_SESSION['autofocus']) ){
+    $_SESSION['autofocus'] = 'first_name';
+}
+
 // Borro cualquier mensaje "
 $_SESSION['msg']=" ";
 
@@ -119,6 +123,7 @@ else {
              case "Nuevo"    : crudPostAlta(); break;
              case "Modificar": crudPostModificar(); break;
              case "Detalles":; // No hago nada
+             case "Volver": $_SESSION['autofocus'] = 'first_name';
          }
     }
 }

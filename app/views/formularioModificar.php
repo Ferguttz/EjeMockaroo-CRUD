@@ -11,7 +11,7 @@
 </tr>
  </tr>
  <tr><td>first_name:</td> 
- <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" autofocus  ></td>
+ <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" <?= $_SESSION['autofocus'] == "first_name" ? "autofocus" : "" ?>  ></td>
  <td rowspan="6">
         <img src=<?= imagenPerfil($cli->id) ?>></img>
     </td>
@@ -25,17 +25,17 @@
  <td><input type="text" name="last_name" value="<?=$cli->last_name ?>"  ></td></tr>
  </tr>
  <tr><td>email:</td> 
- <td><input type="email" name="email" value="<?=$cli->email ?>"  ></td></tr>
+ <td><input type="email" name="email" value="<?=$cli->email ?>" <?= $_SESSION['autofocus'] == "email" ? "autofocus" : "" ?> ></td></tr>
  </tr>
  <tr><td>gender</td> 
  <td><input type="text" name="gender" value="<?=$cli->gender ?>"  ></td></tr>
  </tr>
  <tr><td>ip_address:</td> 
- <td><input type="text" name="ip_address" value="<?=$cli->ip_address ?>"  >
+ <td><input type="text" name="ip_address" value="<?=$cli->ip_address ?>" <?= $_SESSION['autofocus'] == "ip_address" ? "autofocus" : "" ?> >
  <img src=<?= banderaIp($cli->ip_address) ?> style="width: 20px;height: 20px;border-radius: unset;margin-bottom: -5px;"></td></td></tr>
  </tr>
  <tr><td>telefono:</td> 
- <td><input type="tel" name="telefono" value="<?=$cli->telefono ?>"  ></td></tr>
+ <td><input type="tel" name="telefono" value="<?=$cli->telefono ?>" <?= $_SESSION['autofocus'] == "telefono" ? "autofocus" : "" ?> ></td></tr>
  </tr>
  </table>
  <input type="submit"	 name="orden" 	value="<?=$orden?>">

@@ -56,17 +56,6 @@ async function mapa() {
 
 }
 
-function cambiarColor(orden) {
-  sessionStorage.setItem("orden", orden)
-  asignarColor()
-}
-
-function asignarColor() {
-  if (sessionStorage.getItem("orden") == null) sessionStorage.setItem("orden", "id");
-  
-  let orden = sessionStorage.getItem("orden");
-  let elemento = document.getElementById(orden).style.color = "red";
-}
 
 function gestionandoevento(evento) {
   if (document.readyState == 'complete') {
@@ -76,9 +65,6 @@ function gestionandoevento(evento) {
     if (url_final.includes('detalles') ||url_final.includes('Detalles')) mapa();
     if (url_final.includes('modificar') || url_final.includes('Modificar')) mapa();
 
-
-    if (url_final.includes('ordenacion')) cambiarColor(url_final.substring(url_final.indexOf('ordenacion') + 'ordenacion'.length+1))
-    asignarColor();
   }
 }
 

@@ -7,9 +7,9 @@
 <table>
 <tr>
     <?php foreach ($titulos as $valor): ?>
-        <th><a id="<?=$valor?>" href="<?=$_SERVER['PHP_SELF'].'?ordenacion='.$valor?>"><?= $valor ?></a></th>
+        <th><a style="<?= $_SESSION['ordenacion']==$valor ? 'color: red' : '' ?>" id="<?=$valor?>" href="<?=$_SERVER['PHP_SELF'].'?ordenacion='.$valor?>"><?= $valor ?></a></th>
     <?php endforeach ?>
-    <th><a id="telefono" href="<?=$_SERVER['PHP_SELF'].'?ordenacion=telefono'?>">teléfono</a></th>
+    <th><a style="<?= $_SESSION['ordenacion']=='telefono' ? 'color: red' : '' ?>" id="telefono" href="<?=$_SERVER['PHP_SELF'].'?ordenacion=telefono'?>">teléfono</a></th>
 </tr>
 <?php foreach ($tvalores as $valor): ?>
 <tr>
