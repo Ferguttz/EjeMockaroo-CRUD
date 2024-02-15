@@ -102,18 +102,31 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
 
     // Proceso de ordenes de CRUD clientes
     if ( isset($_GET['orden'])){
-        switch ($_GET['orden']) {
-            case "Nuevo"    : crudAlta(); break;
-            case "Borrar"   : crudBorrar   ($_GET['id']); break;
-            case "Modificar": crudModificar($_GET['id']); break;
-            case "Detalles" : crudDetalles ($_GET['id']);break;
-            case "Terminar" : crudTerminar(); break;
+        if($_SESSION['rol'] == 1) {
+            switch ($_GET['orden']) {
+                case "Nuevo"    : crudAlta(); break;
+                case "Borrar"   : crudBorrar   ($_GET['id']); break;
+                case "Modificar": crudModificar($_GET['id']); break;
+                case "Detalles" : crudDetalles ($_GET['id']);break;
+                case "Terminar" : crudTerminar(); break;
+            }
+        } else {
+            switch ($_GET['orden']) {
+                case "Detalles" : crudDetalles ($_GET['id']);break;
+                case "Terminar" : crudTerminar(); break;
+            }
         }
     }
 
     // Procesar modo ordenacion
     if (isset($_GET['ordenacion'])) {
         $_SESSION['ordenacion'] = $_GET['ordenacion'];
+    }
+
+    // Procesar modo ordenacion
+    if (isset($_GET['finSesion'])) {
+        session_destroy();
+        header("Location:index.php");
     }
 } 
 // POST Formulario de alta o de modificación

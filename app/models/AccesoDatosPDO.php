@@ -186,11 +186,16 @@ class AccesoDatos {
     }
 
     public function siguienteId() : int {
-        $stmt = $this->dbh->query("SELECT `AUTO_INCREMENT` 
-                        FROM INFORMATION_SCHEMA.TABLES 
-                        WHERE TABLE_SCHEMA = 'testmockaroo2' 
-                        AND TABLE_NAME = 'clientes'");
-        $resu = $stmt->fetch();
+        //Forma de obtener el siguiente número del AutoIncrement
+        $stmt_nexId = $this->dbh->prepare("SELECT `AUTO_INCREMENT` 
+        FROM INFORMATION_SCHEMA.TABLES 
+        WHERE TABLE_SCHEMA = :database 
+        AND TABLE_NAME = 'clientes'");
+        
+        $stmt_nexId->bindValue(':database',DATABASE);
+        $stmt_nexId->execute();
+
+        $resu = $stmt_nexId->fetch();
         return $resu[0];
     }
    
