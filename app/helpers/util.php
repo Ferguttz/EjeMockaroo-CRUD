@@ -1,5 +1,5 @@
 <?php
-define('MAX_UPLOAD', 500000); //Maximo de tamaño de archivos entre todos 500Kb
+define('MAX_UPLOAD', 500000); //Maximo de tamaño de imagen 500Kb
 define('DIRIMAGEN',"app/uploads/"); //Ruta Directorio de imgusers
 
 

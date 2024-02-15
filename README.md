@@ -2,7 +2,7 @@
 ## Instrucciones
 
 En la caperta "/app/models/dat" se ha incluido el archivo SQL para crear la tabla "user" con
-sus respectivas importaciones.
+sus respectivos INSERT.
 
 Las contraseña cifrada es la misma que el nombre del usuario (login).
 EJ:
