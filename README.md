@@ -6,7 +6,9 @@ sus respectivos INSERT.
 
 Las contraseña cifrada es la misma que el nombre del usuario (login).
 EJ:
+
 (login) -> Hewitt   (password)-> Hewitt     (rol)-> 1
+
 (login) -> Fredra   (password)-> Fredra     (rol)-> 0
 
 ## Mejoras de la 1 a la 10
