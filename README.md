@@ -2,9 +2,9 @@
 ## Instrucciones
 
 En la caperta "/app/models/dat" se ha incluido el archivo SQL para crear la tabla "user" con
-sus respectivos INSERT.
+sus respectivos INSERT. A modo de ejemplo
 
-Las contraseña cifrada es la misma que el nombre del usuario (login).
+Las contraseña cifrada (MD5) es la misma que el nombre del usuario (login).
 EJ:
 
 (login) -> Dimitri   (password)-> Dimitri     (rol)-> 1
