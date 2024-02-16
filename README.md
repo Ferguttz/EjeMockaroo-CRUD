@@ -17,10 +17,12 @@ EJ:
 
 * Mejora 2: Mostrar la lista de clientes con distintos modos de ordenación: nombre, apellido, correo
 electrónico, género o IP y poder navegar por ella.
++color para indicar el criterio de ordenación.
 
 
 * Mejora 3: Mejorar las operaciones de Nuevo y Modificar para que chequee que los datos son
 correctos: correo electrónico (no repetido), IP y teléfono con formato 999-999-9999.
++foco en el formulario se fijará en el campo que tiene un error.
 
 
 * Mejora 4: Mostrar una imagen asociada al cliente almacenada previamente en uploads o una imagen
