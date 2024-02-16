@@ -1,4 +1,4 @@
-<form><button type="submit" name="finSesion" > Cerrar Sesión </button></form>
+<form><button type="submit" name="orden" value="Terminar" > Cerrar Sesión </button></form>
 <br>
 <?php $titulos = ['id','first_name','email','gender','ip_address']; ?>
 <table>

@@ -14,6 +14,7 @@ function crudBorrar ($id){
 function crudTerminar(){
     AccesoDatos::closeModelo();
     session_destroy();
+    header("Location:index.php");
 }
  
 function crudAlta(){

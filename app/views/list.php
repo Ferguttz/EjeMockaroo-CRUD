@@ -1,6 +1,6 @@
 
 <form style="display: inline;"><button type="submit" name="orden" value="Nuevo"> Cliente Nuevo </button></form>
-<form style="display: inline; margin-left: 15px"><button type="submit" name="finSesion" > Cerrar Sesión </button></form><br>
+<form style="display: inline; margin-left: 15px"><button type="submit" name="orden" value="Terminar"  > Cerrar Sesión </button></form><br>
 <br>
 <?php $titulos = ['id','first_name','email','gender','ip_address']; ?>
 <table>

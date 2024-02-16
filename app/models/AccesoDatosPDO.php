@@ -216,7 +216,6 @@ class AccesoDatos {
         $stmt = $this->dbh->prepare("SELECT login,password FROM user WHERE login=:login");
         $stmt->bindValue(':login', $login);
         $stmt->execute();
-
         //Si no existe el login devuelve falso
         if ($stmt->rowCount() != 1) {
             return false;

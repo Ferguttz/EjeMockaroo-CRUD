@@ -122,12 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" ){
     if (isset($_GET['ordenacion'])) {
         $_SESSION['ordenacion'] = $_GET['ordenacion'];
     }
-
-    // Procesar modo ordenacion
-    if (isset($_GET['finSesion'])) {
-        session_destroy();
-        header("Location:index.php");
-    }
 } 
 // POST Formulario de alta o de modificación
 else {

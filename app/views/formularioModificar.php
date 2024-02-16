@@ -8,13 +8,16 @@
         <input type="hidden" name="MAX_FILE_SIZE" value="500000" /> 
         <input name="imagen" type="file" accept="image/png, image/jpeg">
         </td>
+    <td rowspan="7">
+    <div id="map" style="height: 200px; width: 370px;"></div>
+    </td>   
 </tr>
  </tr>
  <tr><td>first_name:</td> 
  <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" <?= $_SESSION['autofocus'] == "first_name" ? "autofocus" : "" ?>  ></td>
  <td rowspan="6">
         <img src=<?= imagenPerfil($cli->id) ?>></img>
-    </td>   
+ </td> 
 </tr>
  </tr>
  <tr><td>last_name:</td> 
