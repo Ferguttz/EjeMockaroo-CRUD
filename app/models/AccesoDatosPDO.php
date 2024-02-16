@@ -223,7 +223,8 @@ class AccesoDatos {
         }
 
         //Se devulve según si la contraseña dada coincide con le hash de la base
-        return password_verify($password,$stmt->fetch()[1]);
+        $password_Base = $stmt->fetch()[1];
+        return md5($password) === $password_Base;
     }
 
 

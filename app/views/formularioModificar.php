@@ -14,11 +14,7 @@
  <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" <?= $_SESSION['autofocus'] == "first_name" ? "autofocus" : "" ?>  ></td>
  <td rowspan="6">
         <img src=<?= imagenPerfil($cli->id) ?>></img>
-    </td>
-    
-    <td rowspan="7">
-    <div id="map"></div>
-    </td> 
+    </td>   
 </tr>
  </tr>
  <tr><td>last_name:</td> 
@@ -46,4 +42,3 @@
         <button type="submit" name="nav-modificar"  value="Anterior"> Anterior << </button>
         <button type="submit" name="nav-modificar"  value="Siguiente"> Siguiente >> </button>
 </form>  
-

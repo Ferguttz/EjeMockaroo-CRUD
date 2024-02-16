@@ -1,5 +1,8 @@
 <hr>
 <head>
+<script type="text/javascript" src="web/js/funciones.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <br><br>
 
@@ -8,7 +11,10 @@
  <td><input type="number" name="id" value="<?=$cli->id ?>"  readonly > </td>
     <td rowspan="7">
         <img width="250px" src=<?= imagenPerfil($cli->id) ?>></img>
-    </td> 
+    </td>
+    <td rowspan="7">
+    <div id="map" style="height: 200px; width: 370px;"></div>
+    </td>  
 </tr>
  <tr><td>first_name:</td> 
  <td><input type="text" name="first_name" value="<?=$cli->first_name ?>" readonly > </td></tr>
@@ -31,6 +37,3 @@
  <td><input type="tel" name="telefono" value="<?=$cli->telefono ?>" readonly ></td></tr>
  </tr>
  </table>
-
-
- </div> 
